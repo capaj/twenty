@@ -16,4 +16,5 @@ export const compositeDefinitions = new Map<
   [FieldMetadataType.LINK, linkFields],
   [FieldMetadataType.CURRENCY, currencyFields],
   [FieldMetadataType.FULL_NAME, fullNameFields],
+  [FieldMetadataType.ADDRESS, fullNameFields],
 ]);

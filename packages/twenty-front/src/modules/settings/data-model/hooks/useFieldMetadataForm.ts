@@ -159,7 +159,9 @@ export const useFieldMetadataForm = () => {
 
   const handleFormChange = (values: PartialFormValues) => {
     const nextFormValues = mergePartialValues(formValues, values);
-
+    if (nextFormValues.type === FieldMetadataType.Address) {
+      nextFormValues.icon = 'IconMap';
+    }
     setFormValues(nextFormValues);
     setValidationResult(schema.safeParse(nextFormValues));
 
@@ -175,6 +177,7 @@ export const useFieldMetadataForm = () => {
       select: nextSelectFormValues,
       ...nextFieldFormValues
     } = nextFormValues;
+    console.log('nextFieldFormValues:', nextFieldFormValues);
 
     setHasFieldFormChanged(
       !isDeeplyEqual(initialFieldFormValues, nextFieldFormValues),

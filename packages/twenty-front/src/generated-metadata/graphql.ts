@@ -24,6 +24,16 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type ActivateWorkspaceInput = {
+  displayName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Analytics = {
+  __typename?: 'Analytics';
+  /** Boolean that confirms query was dispatched */
+  success: Scalars['Boolean']['output'];
+};
+
 export type ApiKeyToken = {
   __typename?: 'ApiKeyToken';
   token: Scalars['String']['output'];
@@ -64,6 +74,18 @@ export type BooleanFieldComparison = {
   isNot?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type ClientConfig = {
+  __typename?: 'ClientConfig';
+  authProviders: AuthProviders;
+  billing: Billing;
+  debugMode: Scalars['Boolean']['output'];
+  sentry: Sentry;
+  signInPrefilled: Scalars['Boolean']['output'];
+  signUpDisabled: Scalars['Boolean']['output'];
+  support: Support;
+  telemetry: Telemetry;
+};
+
 export type CreateFieldInput = {
   defaultValue?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -100,9 +122,18 @@ export type CreateOneObjectInput = {
   object: CreateObjectInput;
 };
 
+export type CreateOneRefreshTokenInput = {
+  /** The record to create */
+  refreshToken: CreateRefreshTokenInput;
+};
+
 export type CreateOneRelationInput = {
   /** The record to create */
   relation: CreateRelationInput;
+};
+
+export type CreateRefreshTokenInput = {
+  expiresAt: Scalars['DateTime']['input'];
 };
 
 export type CreateRelationInput = {
@@ -152,6 +183,30 @@ export type EmailPasswordResetLink = {
   success: Scalars['Boolean']['output'];
 };
 
+export type FeatureFlag = {
+  __typename?: 'FeatureFlag';
+  id: Scalars['ID']['output'];
+  key: Scalars['String']['output'];
+  value: Scalars['Boolean']['output'];
+  workspaceId: Scalars['String']['output'];
+};
+
+export type FeatureFlagFilter = {
+  and?: InputMaybe<Array<FeatureFlagFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<FeatureFlagFilter>>;
+};
+
+export type FeatureFlagSort = {
+  direction: SortDirection;
+  field: FeatureFlagSortFields;
+  nulls?: InputMaybe<SortNulls>;
+};
+
+export enum FeatureFlagSortFields {
+  Id = 'id'
+}
+
 export type FieldConnection = {
   __typename?: 'FieldConnection';
   /** Array of edges. */
@@ -182,6 +237,7 @@ export type FieldDeleteResponse = {
 
 /** Type of the field */
 export enum FieldMetadataType {
+  Address = 'ADDRESS',
   Boolean = 'BOOLEAN',
   Currency = 'CURRENCY',
   DateTime = 'DATE_TIME',
@@ -243,10 +299,14 @@ export type LoginToken = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  activateWorkspace: Workspace;
   challenge: LoginToken;
+  createEvent: Analytics;
   createOneField: Field;
   createOneObject: Object;
+  createOneRefreshToken: RefreshToken;
   createOneRelation: Relation;
+  deleteCurrentWorkspace: Workspace;
   deleteOneField: FieldDeleteResponse;
   deleteOneObject: Object;
   deleteOneRelation: RelationDeleteResponse;
@@ -260,16 +320,29 @@ export type Mutation = {
   updateOneField: Field;
   updateOneObject: Object;
   updatePasswordViaResetToken: InvalidatePassword;
+  updateWorkspace: Workspace;
   uploadFile: Scalars['String']['output'];
   uploadImage: Scalars['String']['output'];
   uploadProfilePicture: Scalars['String']['output'];
+  uploadWorkspaceLogo: Scalars['String']['output'];
   verify: Verify;
+};
+
+
+export type MutationActivateWorkspaceArgs = {
+  data: ActivateWorkspaceInput;
 };
 
 
 export type MutationChallengeArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+
+export type MutationCreateEventArgs = {
+  data: Scalars['JSON']['input'];
+  type: Scalars['String']['input'];
 };
 
 
@@ -280,6 +353,11 @@ export type MutationCreateOneFieldArgs = {
 
 export type MutationCreateOneObjectArgs = {
   input: CreateOneObjectInput;
+};
+
+
+export type MutationCreateOneRefreshTokenArgs = {
+  input: CreateOneRefreshTokenInput;
 };
 
 
@@ -347,6 +425,11 @@ export type MutationUpdatePasswordViaResetTokenArgs = {
 };
 
 
+export type MutationUpdateWorkspaceArgs = {
+  data: UpdateWorkspaceInput;
+};
+
+
 export type MutationUploadFileArgs = {
   file: Scalars['Upload']['input'];
   fileFolder?: InputMaybe<FileFolder>;
@@ -360,6 +443,11 @@ export type MutationUploadImageArgs = {
 
 
 export type MutationUploadProfilePictureArgs = {
+  file: Scalars['Upload']['input'];
+};
+
+
+export type MutationUploadWorkspaceLogoArgs = {
   file: Scalars['Upload']['input'];
 };
 
@@ -404,10 +492,14 @@ export type Query = {
   __typename?: 'Query';
   checkUserExists: UserExists;
   checkWorkspaceInviteHashIsValid: WorkspaceInviteHashValid;
+  clientConfig: ClientConfig;
   currentUser: User;
+  currentWorkspace: Workspace;
   field: Field;
   fields: FieldConnection;
   findWorkspaceFromInviteHash: Workspace;
+  getTimelineThreadsFromCompanyId: TimelineThreadsWithTotal;
+  getTimelineThreadsFromPersonId: TimelineThreadsWithTotal;
   object: Object;
   objects: ObjectConnection;
   relation: Relation;
@@ -439,6 +531,20 @@ export type QueryFieldsArgs = {
 
 export type QueryFindWorkspaceFromInviteHashArgs = {
   inviteHash: Scalars['String']['input'];
+};
+
+
+export type QueryGetTimelineThreadsFromCompanyIdArgs = {
+  companyId: Scalars['ID']['input'];
+  page: Scalars['Int']['input'];
+  pageSize: Scalars['Int']['input'];
+};
+
+
+export type QueryGetTimelineThreadsFromPersonIdArgs = {
+  page: Scalars['Int']['input'];
+  pageSize: Scalars['Int']['input'];
+  personId: Scalars['ID']['input'];
 };
 
 
@@ -517,6 +623,18 @@ export type Sentry = {
   dsn?: Maybe<Scalars['String']['output']>;
 };
 
+/** Sort Directions */
+export enum SortDirection {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
+
+/** Sort Nulls Options */
+export enum SortNulls {
+  NullsFirst = 'NULLS_FIRST',
+  NullsLast = 'NULLS_LAST'
+}
+
 export type Support = {
   __typename?: 'Support';
   supportDriver: Scalars['String']['output'];
@@ -540,6 +658,7 @@ export type TimelineThread = {
   participantCount: Scalars['Float']['output'];
   read: Scalars['Boolean']['output'];
   subject: Scalars['String']['output'];
+  visibility: Scalars['String']['output'];
 };
 
 export type TimelineThreadParticipant = {
@@ -551,6 +670,12 @@ export type TimelineThreadParticipant = {
   lastName: Scalars['String']['output'];
   personId?: Maybe<Scalars['ID']['output']>;
   workspaceMemberId?: Maybe<Scalars['ID']['output']>;
+};
+
+export type TimelineThreadsWithTotal = {
+  __typename?: 'TimelineThreadsWithTotal';
+  timelineThreads: Array<TimelineThread>;
+  totalNumberOfThreads: Scalars['Int']['output'];
 };
 
 export type TransientToken = {
@@ -597,10 +722,19 @@ export type UpdateOneObjectInput = {
   update: UpdateObjectInput;
 };
 
+export type UpdateWorkspaceInput = {
+  allowImpersonation?: InputMaybe<Scalars['Boolean']['input']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  domainName?: InputMaybe<Scalars['String']['input']>;
+  inviteHash?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type User = {
   __typename?: 'User';
   canImpersonate: Scalars['Boolean']['output'];
   createdAt: Scalars['DateTime']['output'];
+  defaultAvatarUrl?: Maybe<Scalars['String']['output']>;
   defaultWorkspace: Workspace;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   disabled?: Maybe<Scalars['Boolean']['output']>;
@@ -614,7 +748,7 @@ export type User = {
   passwordResetTokenExpiresAt?: Maybe<Scalars['DateTime']['output']>;
   supportUserHash?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
-  workspaceMember: WorkspaceMember;
+  workspaceMember?: Maybe<WorkspaceMember>;
 };
 
 export type UserEdge = {
@@ -649,11 +783,18 @@ export type Workspace = {
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   displayName?: Maybe<Scalars['String']['output']>;
   domainName?: Maybe<Scalars['String']['output']>;
+  featureFlags?: Maybe<Array<FeatureFlag>>;
   id: Scalars['ID']['output'];
   inviteHash?: Maybe<Scalars['String']['output']>;
   logo?: Maybe<Scalars['String']['output']>;
   subscriptionStatus: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+export type WorkspaceFeatureFlagsArgs = {
+  filter?: FeatureFlagFilter;
+  sorting?: Array<FeatureFlagSort>;
 };
 
 export type WorkspaceEdge = {

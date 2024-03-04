@@ -32,6 +32,57 @@ const getTypeFromFieldMetadataType = (
 
 const get_subfieldsFromField = (nodeField: NodeField): NodeField[] => {
   switch (nodeField.type) {
+    case FieldMetadataType.ADDRESS: {
+      const address1: NodeField = {
+        type: 'TEXT',
+        name: 'address1',
+        label: 'Address 1',
+        description: 'Address 1',
+        isNullable: true,
+        defaultValue: null,
+      };
+      const address2: NodeField = {
+        type: 'TEXT',
+        name: 'address2',
+        label: 'Address 2',
+        description: 'Address 2',
+        isNullable: true,
+        defaultValue: null,
+      };
+      const city: NodeField = {
+        type: 'TEXT',
+        name: 'city',
+        label: 'City',
+        description: 'City',
+        isNullable: true,
+        defaultValue: null,
+      };
+      const state: NodeField = {
+        type: 'TEXT',
+        name: 'state',
+        label: 'State',
+        description: 'State',
+        isNullable: true,
+        defaultValue: null,
+      };
+      const postalCode: NodeField = {
+        type: 'TEXT',
+        name: 'postalCode',
+        label: 'Postal Code',
+        description: 'Postal Code',
+        isNullable: true,
+        defaultValue: null,
+      };
+      const country: NodeField = {
+        type: 'TEXT',
+        name: 'country',
+        label: 'Country',
+        description: 'Country',
+        isNullable: true,
+        defaultValue: null,
+      };
+      return [address1, address2, city, state, postalCode, country];
+    }
     case FieldMetadataType.FULL_NAME: {
       const firstName: NodeField = {
         type: 'TEXT',
@@ -108,6 +159,7 @@ export const computeInputFields = (
     switch (nodeField.type) {
       case FieldMetadataType.FULL_NAME:
       case FieldMetadataType.LINK:
+      case FieldMetadataType.ADDRESS:
       case FieldMetadataType.CURRENCY:
         for (const subNodeField of get_subfieldsFromField(nodeField)) {
           const field = {

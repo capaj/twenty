@@ -35,8 +35,8 @@
     "storybook:coverage": "yarn storybook:test-slow --coverage && npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook --check-coverage",
     "storybook:modules:coverage": "STORYBOOK_SCOPE=modules yarn storybook:coverage",
     "storybook:pages:coverage": "STORYBOOK_SCOPE=pages yarn storybook:coverage",
-    "graphql:data:generate": "dotenv cross-var graphql-codegen -- --config codegen.cjs",
-    "graphql:metadata:generate": "dotenv cross-var graphql-codegen -- --config codegen-metadata.cjs",
+    "graphql:data:generate": "npx dotenv cross-var graphql-codegen -- --config codegen.cjs",
+    "graphql:metadata:generate": "npx dotenv cross-var graphql-codegen -- --config codegen-metadata.cjs",
     "chromatic": "cross-var npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --build-script-name=storybook:build",
     "chromatic:ci": "cross-var npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --build-script-name=storybook:build --exit-zero-on-changes"
   },

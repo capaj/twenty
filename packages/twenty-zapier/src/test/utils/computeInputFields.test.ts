@@ -68,6 +68,23 @@ describe('computeInputFields', () => {
           },
           {
             node: {
+              type: 'ADDRESS',
+              name: 'address',
+              label: 'Address',
+              description: 'Contact’s address',
+              isNullable: true,
+              defaultValue: {
+                address1: '',
+                address2: '',
+                city: '',
+                state: '',
+                postalCode: '',
+                country: '',
+              },
+            },
+          },
+          {
+            node: {
               type: 'UUID',
               name: 'id',
               label: 'Id',

@@ -6,6 +6,7 @@ import {
   IconKey,
   IconLink,
   IconMail,
+  IconMap,
   IconNumbers,
   IconPhone,
   IconRelationManyToMany,
@@ -92,4 +93,5 @@ export const settingsFieldMetadataTypes: Partial<
     defaultValue: '3',
   },
   [FieldMetadataType.FullName]: { label: 'Full Name', Icon: IconUser },
+  [FieldMetadataType.Address]: { label: 'Address', Icon: IconMap },
 };

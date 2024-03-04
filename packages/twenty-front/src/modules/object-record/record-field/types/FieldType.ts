@@ -7,6 +7,7 @@ export type FieldType =
   | 'DOUBLE_TEXT'
   | 'EMAIL'
   | 'FULL_NAME'
+  | 'ADDRESS'
   | 'LINK'
   | 'NUMBER'
   | 'PHONE'

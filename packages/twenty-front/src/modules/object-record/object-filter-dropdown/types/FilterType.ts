@@ -6,5 +6,6 @@ export type FilterType =
   | 'NUMBER'
   | 'CURRENCY'
   | 'FULL_NAME'
+  | 'ADDRESS'
   | 'LINK'
   | 'RELATION';

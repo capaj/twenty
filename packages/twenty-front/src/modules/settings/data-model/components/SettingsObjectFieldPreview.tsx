@@ -2,7 +2,6 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { parseFieldType } from '@/object-metadata/utils/parseFieldType';
-import { FieldDisplay } from '@/object-record/record-field/components/FieldDisplay';
 import { FieldContext } from '@/object-record/record-field/contexts/FieldContext';
 import { BooleanFieldInput } from '@/object-record/record-field/meta-types/input/components/BooleanFieldInput';
 import { RatingFieldInput } from '@/object-record/record-field/meta-types/input/components/RatingFieldInput';
@@ -154,9 +153,7 @@ export const SettingsObjectFieldPreview = ({
               <BooleanFieldInput readonly />
             ) : fieldMetadata.type === FieldMetadataType.Rating ? (
               <RatingFieldInput readonly />
-            ) : (
-              <FieldDisplay />
-            )}
+            ) : null}
           </FieldContext.Provider>
         </StyledFieldPreview>
       </StyledCardContent>

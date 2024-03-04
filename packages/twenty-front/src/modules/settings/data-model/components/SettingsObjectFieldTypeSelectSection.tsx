@@ -103,6 +103,7 @@ export const SettingsObjectFieldTypeSelectSection = ({
           FieldMetadataType.Rating,
           FieldMetadataType.Relation,
           FieldMetadataType.Text,
+          FieldMetadataType.Address,
         ].includes(values.type) && (
           <StyledSettingsObjectFieldTypeCard
             preview={

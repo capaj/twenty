@@ -31,6 +31,7 @@ export enum FieldMetadataType {
   LINK = 'LINK',
   CURRENCY = 'CURRENCY',
   FULL_NAME = 'FULL_NAME',
+  ADDRESS = 'ADDRESS',
   RATING = 'RATING',
   SELECT = 'SELECT',
   MULTI_SELECT = 'MULTI_SELECT',

@@ -52,6 +52,12 @@ export type FieldFullNameMetadata = {
   fieldName: string;
 };
 
+export type FieldAddressMetadata = {
+  objectMetadataNameSingular?: string;
+  placeHolder: string;
+  fieldName: string;
+};
+
 export type FieldEmailMetadata = {
   objectMetadataNameSingular?: string;
   placeHolder: string;
@@ -97,6 +103,7 @@ export type FieldMetadata =
   | FieldDateTimeMetadata
   | FieldEmailMetadata
   | FieldFullNameMetadata
+  | FieldAddressMetadata
   | FieldLinkMetadata
   | FieldNumberMetadata
   | FieldPhoneMetadata
